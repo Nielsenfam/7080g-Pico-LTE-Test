@@ -12,4 +12,4 @@ then goes to sleep for a period of time and wakes up and repeats the process
 
 Setup:
 
-Copy tsconfig-template.py to tsconfig.py and edit to include Thingspeak secrets and other configations
+Copy tsconfig-template.py to tsconfig.py and edit to include Thingspeak secrets and other configurations
