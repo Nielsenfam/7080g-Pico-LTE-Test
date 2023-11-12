@@ -11,7 +11,32 @@ import machine
 import utime
 import random
 
+import TSL2591
+
 import tsconfig
+
+
+'''Then we define the physical I2C that the sensor is connected to''' 
+sdaPIN=machine.Pin(4)
+sclPIN=machine.Pin(5)
+i2c_bus = 0
+
+i2c=machine.I2C(i2c_bus, sda=sdaPIN, scl=sclPIN, freq=400000)
+
+lux_addr = 0x29
+
+'''and finnaly set up the sensor object that will always talk to the sensor'''
+try:
+    tsl = TSL2591.TSL2591(i2c, lux_addr)
+    chip_id = tsl._chip_id
+    if (chip_id== 0x50):
+        identifier = "TSL2591"
+    else:
+        identifier = "other sensor"
+except OSError:
+    print ("TSL2591 not present")
+else:
+    print('{} is present'.format(identifier))
 
 # Sim APM
 sim_apn = tsconfig.sim_apn
@@ -198,6 +223,32 @@ def data_sim_test():
     mqtt_msg_len = len(mqtt_msg)
     mqtt_test()
 
+def data_read_sensor():
+    global mqtt_msg
+    global mqtt_msg_len
+    
+    try:
+        lux = tsl.lux                                              #read the lux value
+        infrared = tsl.infrared                                    #read the infrared value
+        visible = tsl.visible                                      #read the visible value
+        full_spectrum = tsl.full_spectrum                          #read the full_spectrum value
+                                                                   #the most useful value for many projects is the lux value.
+        print("Lux: {}  ".format(lux), end = '')                   
+        print("Infrared: {}  ".format(infrared), end = '')
+        print("Visible: {}  ".format(visible), end = '')
+        print("Full Spectrum: {}  ".format(full_spectrum), end = '\r')
+    except OSError:
+        print("TSL2591 I/O Error - retrying connection")
+
+    datapt = lux
+    
+    print( 'datapt =', str(datapt))
+    mqtt_msg = 'field1=' + str(datapt)
+    mqtt_msg_len = len(mqtt_msg)
+    mqtt_test()
+
+
+
 def sync_ntp_time():
     ret_str = b''
     send_at('AT+CNTPCID=0',"OK")
@@ -236,7 +287,10 @@ while True:
         print( "date/time from ntp:", time_str )
         
         # get simulated data
-        data_sim_test()
+        #data_sim_test()
+        
+        # read sensor data
+        data_read_sensor()
     
     # sleep for mins
     module_power_off()
