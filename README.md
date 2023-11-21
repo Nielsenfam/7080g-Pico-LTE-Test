@@ -12,9 +12,9 @@ with TLS2591 Sensor data upload to Thingspeak
 1.  [TSL2591 Light Sensor Module](https://www.adafruit.com/product/1980)
 
 # Software:
-Micropython
-Waveshare SIM7080G python libraries
-Thingspeak communications using MQTT
+- Micropython
+- Waveshare SIM7080G python libraries
+- Thingspeak communications using MQTT
 
 # Description:
 This program reads data from a TSL2591 Light Sensor and
@@ -23,3 +23,7 @@ then goes to sleep for a period of time and wakes up and repeats the process
 
 # Setup:
 Copy tsconfig-template.py to tsconfig.py and edit to include Thingspeak secrets and other configurations
+
+# To Do:
+Software: Calibration code
+Hardware: Battery, Weatherproof case
