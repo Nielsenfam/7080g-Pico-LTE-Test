@@ -7,7 +7,7 @@ with TLS2591 Sensor data upload to Thingspeak
 1.  [Raspberry Pi Pico](https://www.adafruit.com/product/5525)
 1.  [SIM card](https://store.simbase.com/)
 1.  [Headers](https://www.adafruit.com/product/5582)
-1.  [STEMMA QT Cable:(https://www.adafruit.com/product/4210)
+1.  [STEMMA QT Cable](https://www.adafruit.com/product/4210)
 1.  [PiCowbell Proto for Pico](https://www.adafruit.com/product/5200)
 1.  [TSL2591 Light Sensor Module](https://www.adafruit.com/product/1980)
 
